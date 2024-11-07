@@ -13,7 +13,7 @@ export default function CustomerTable() {
     useEffect(() => {
         async function fetchCustomers() {
             try {
-                const response = await axios.get('http://localhost:5000/customers-info');
+                const response = await axios.get('https://pos-soft-server.vercel.app/customers-info');
                 setCustomers(response.data);
             } catch (error) {
                 console.error("Error fetching customer data:", error);
@@ -57,7 +57,7 @@ export default function CustomerTable() {
 
     
         try {
-            const res = await axios.put(`http://localhost:5000/customer-pay/${id}`, { payammount });
+            const res = await axios.put(`https://pos-soft-server.vercel.app/customer-pay/${id}`, { payammount });
             console.log(res.data);
             if(res.data.result.modifiedCount > 0){
                 setFetch(!fetch)

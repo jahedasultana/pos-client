@@ -10,7 +10,7 @@ const ProductsList = () => {
     // Fetch categories from the backend
     const fetchCategories = async () => {
         try {
-            const response = await axios.get("http://localhost:5000/products-report");
+            const response = await axios.get("https://pos-soft-server.vercel.app/products-report");
             const allProducts = response.data;
 
             const distinctCategories = [
@@ -26,7 +26,7 @@ const ProductsList = () => {
     // Fetch products from the backend
     const fetchProducts = async (category) => {
         try {
-            const response = await axios.get("http://localhost:5000/products-report", {
+            const response = await axios.get("https://pos-soft-server.vercel.app/products-report", {
                 params: { category }
             });
             setProducts(response.data);

@@ -125,7 +125,7 @@ const Amount = () => {
         };
 
         try {
-            const salesResponse = await axios.post('http://localhost:5000/changeable', currentTransactionData);
+            const salesResponse = await axios.post('https://pos-soft-server.vercel.app/changeable', currentTransactionData);
             console.log("i found the data",salesResponse?.data?.insertedId);
 
             if (salesResponse) {

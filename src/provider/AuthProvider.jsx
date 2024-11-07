@@ -46,7 +46,7 @@ const AuthProvider = ({ children }) => {
         };
         try {
             const { data } = await axios.put(
-                `http://localhost:5000//users`,
+                `https://pos-soft-server.vercel.app//users`,
                 currentUser
             );
             return data;

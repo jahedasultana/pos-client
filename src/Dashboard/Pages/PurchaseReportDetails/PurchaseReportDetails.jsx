@@ -21,7 +21,7 @@ const PurchaseReportDetails = () => {
   useEffect(() => {
     const fetchData = async () => {
       const res = await axios.get(
-        `http://localhost:5000/single-product-report/${id}`
+        `https://pos-soft-server.vercel.app/single-product-report/${id}`
       );
       setProducts(res.data);
     };
@@ -51,7 +51,7 @@ const PurchaseReportDetails = () => {
     console.log(payAmount);
 
     try {
-      const res = await axios.put(`http://localhost:5000/update-pay-amount/${id}`,{payAmount})
+      const res = await axios.put(`https://pos-soft-server.vercel.app/update-pay-amount/${id}`,{payAmount})
     const result = res.data
     if(res.data){
       Swal.fire({

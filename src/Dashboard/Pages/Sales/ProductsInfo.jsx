@@ -21,7 +21,7 @@ const ProductsInfo = () => {
     useEffect(() => {
         const fetchProducts = async () => {
             try {
-                const response = await axios.get("http://localhost:5000/product-info");
+                const response = await axios.get("https://pos-soft-server.vercel.app/product-info");
                 setProducts(response.data);
             } catch (error) {
                 console.error("Error fetching product data:", error);
@@ -83,7 +83,7 @@ const ProductsInfo = () => {
 
         try {
             const id = selectedProduct?.value;
-            await axios.put(`http://localhost:5000/product-info/${id}`, { newStock });
+            await axios.put(`https://pos-soft-server.vercel.app/product-info/${id}`, { newStock });
             console.log("Stock updated successfully");
         } catch (error) {
             console.error("Error updating stock:", error);

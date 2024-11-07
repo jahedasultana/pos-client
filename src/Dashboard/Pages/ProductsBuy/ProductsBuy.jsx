@@ -16,7 +16,7 @@ const CompanyProductForm = () => {
         moneyGiven: data.moneyGiven,
     }
     try {
-      const response = await axios.post('http://localhost:5000/company-products', productsBuyDetails);
+      const response = await axios.post('https://pos-soft-server.vercel.app/company-products', productsBuyDetails);
       console.log('Data submitted successfully:', response.data);
       reset();
     } catch (error) {

@@ -83,7 +83,7 @@ export default function AddCustomer() {
 
         try {
             // Post the form data to the database
-            const response = await axios.post("http://localhost:5000/add-customer", formCustomerData);
+            const response = await axios.post("https://pos-soft-server.vercel.app/add-customer", formCustomerData);
             const result = response.data;
             console.log("Customer added successfully:", result);
 
