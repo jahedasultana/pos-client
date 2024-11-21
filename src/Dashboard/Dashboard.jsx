@@ -18,7 +18,7 @@ const Dashboard = () => {
     useEffect(() => {
         const fetchCounts = async () => {
             try {
-                const response = await axios.get('https://pos-soft-server.vercel.app/api/dashboard-counts');
+                const response = await axios.get('http://localhost:5000/api/dashboard-counts');
                 setCounts(response.data);
                 console.log(response?.data);
             } catch (error) {

@@ -17,6 +17,7 @@ export default function AddCustomer() {
         picture: "",
         granterPicture1: "",
         granterPicture2: "",
+        creationDate: '',
     });
 
     const imgbbAPIKey = "7a1340f98cb940d3df99fa653c6a6f69"; // Replace with your imgbb API key
@@ -69,21 +70,20 @@ export default function AddCustomer() {
         console.log(typeof finalDue)
 
 
-        const { customerName, fatherOrHusbandName, address, mobile, GranterName1, GranterName2, GranterNumber1, GranterNumber2, picture, granterPicture1, granterPicture2, } = formCustomerData;
+        // const { customerName, fatherOrHusbandName, address, mobile, GranterName1, GranterName2, GranterNumber1, GranterNumber2, picture, granterPicture1, granterPicture2, } = formCustomerData;
 
-        // Validate required fields (excluding images)
-        if (!customerName || !address || !mobile || !GranterName1 || !GranterName2 || !finalDue || !fatherOrHusbandName || !granterPicture1 || !granterPicture2 || !GranterName2 || !GranterNumber2 || !picture || !GranterNumber1) {
-            Swal.fire({
-                icon: "error",
-                title: "সবগুলো ফিল্ড পূরণ করতে হবে",
-                showConfirmButton: true,
-            });
-            return;
-        }
+        // if (!customerName || !address || !mobile || !GranterName1 || !GranterName2 || !finalDue || !fatherOrHusbandName || !granterPicture1 || !granterPicture2 || !GranterName2 || !GranterNumber2 || !picture || !GranterNumber1) {
+        //     Swal.fire({
+        //         icon: "error",
+        //         title: "সবগুলো ফিল্ড পূরণ করতে হবে",
+        //         showConfirmButton: true,
+        //     });
+        //     return;
+        // }
 
         try {
             // Post the form data to the database
-            const response = await axios.post("https://pos-soft-server.vercel.app/add-customer", formCustomerData);
+            const response = await axios.post("http://localhost:5000/add-customer", formCustomerData);
             const result = response.data;
             console.log("Customer added successfully:", result);
 
@@ -110,6 +110,7 @@ export default function AddCustomer() {
                 picture: "",
                 granterPicture1: "",
                 granterPicture2: "",
+                creationDate: ''
             });
         } catch (error) {
             Swal.fire({
@@ -284,6 +285,20 @@ export default function AddCustomer() {
                                 type="number"
                                 name="totalDue"
                                 id="totalDue"
+                                onChange={handleInputChange}
+                                className="py-2 px-3 block outline-none rounded-sm border border-teal-400"
+                            />
+                        </div>
+
+                        {/* date added */}
+                        <div className="flex flex-col">
+                            <label htmlFor="granterPicture2" className="text-md">Date
+                            </label>
+                            <input
+                                type="date"
+                                name="creationDate"
+                                value={formCustomerData.creationDate}
+                                id="creationDate"
                                 onChange={handleInputChange}
                                 className="py-2 px-3 block outline-none rounded-sm border border-teal-400"
                             />

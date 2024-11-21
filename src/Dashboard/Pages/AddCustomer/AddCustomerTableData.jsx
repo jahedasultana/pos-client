@@ -8,7 +8,7 @@ export default function AddCustomerTableData() {
     // Function to fetch data from the backend
     const fetchProducts = async () => {
         try {
-            const response = await axios.get("https://pos-soft-server.vercel.app/customers");
+            const response = await axios.get("http://localhost:5000/customers");
             setCustomers(response.data);
             console.log(response.data)
         } catch (error) {
@@ -19,7 +19,7 @@ export default function AddCustomerTableData() {
     // Function to delete a product
     const deleteProduct = async (id) => {
         try {
-            await axios.delete(`https://pos-soft-server.vercel.app/customers/${id}`);
+            await axios.delete(`http://localhost:5000/customers/${id}`);
             // Remove the deleted product from the state
             setCustomers(customers.filter((customer) => customer._id !== id));
             Swal.fire({

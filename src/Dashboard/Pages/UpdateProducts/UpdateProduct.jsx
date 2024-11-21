@@ -8,13 +8,10 @@ export default function UpdateProduct() {
     const { id } = useParams()
     const navigate = useNavigate();
     const [formData, setFormData] = useState({
-        productCode: "",
         productName: "",
         productQty: "",
         productCategory: "",
         buyRate: "",
-        saleRate: "",
-        wholeSales: "",
         productImage: null,
     });
 
@@ -24,16 +21,13 @@ export default function UpdateProduct() {
     useEffect(() => {
         async function fetchProductData() {
             try {
-                const response = await axios.get(`https://pos-soft-server.vercel.app/products/${id}`);
+                const response = await axios.get(`http://localhost:5000/products/${id}`);
                 const product = response.data;
                 setFormData({
-                    productCode: product.productCode,
                     productName: product.productName,
                     productQty: product.productQty,
                     productCategory: product.productCategory,
                     buyRate: product.buyRate,
-                    saleRate: product.saleRate,
-                    wholeSales: product.wholeSales,
                     productImage: null, // Reset image field
                 });
             } catch (error) {
@@ -88,7 +82,7 @@ export default function UpdateProduct() {
         };
 
         try {
-            const response = await axios.put(`https://pos-soft-server.vercel.app/products/${id}`, updatedProductData);
+            const response = await axios.put(`http://localhost:5000/products/${id}`, updatedProductData);
             console.log(response)
             navigate('/dashboard/add-product')
             Swal.fire({
@@ -117,29 +111,14 @@ export default function UpdateProduct() {
     };
 
     return (
-        <div className="w-full h-auto bg-slate-100 py-8">
+        <div className="w-full min-h-screen bg-red-200 py-8">
             <h1 className="text-center text-lg md:text-3xl font-semibold mb-6 text-teal-700">
                 প্রোডাক্ট আপডেট করুন
             </h1>
 
             {/* Form Layout */}
-            <div className="max-w-full mx-auto p-8 bg-white shadow-lg rounded-lg">
+            <div className="max-w-full mx-auto p-8 shadow-lg rounded-lg">
                 <form onSubmit={handleSubmit} className="grid grid-cols-1 md:grid-cols-3 gap-3">
-                    {/* Product Code */}
-                    <div className="flex flex-col">
-                        <label htmlFor="productCode" className="text-md ">
-                            প্রোডাক্ট কোড :
-                        </label>
-                        <input
-                            type="text"
-                            name="productCode"
-                            id="productCode"
-                            value={formData.productCode}
-                            onChange={handleInputChange}
-                            placeholder="প্রোডাক্ট কোড"
-                            className="py-2 px-3 block outline-none rounded-sm border border-teal-400"
-                        />
-                    </div>
 
                     {/* Product Name */}
                     <div className="flex flex-col">
@@ -205,37 +184,6 @@ export default function UpdateProduct() {
                         />
                     </div>
 
-                    {/* Sale Rate */}
-                    <div className="flex flex-col">
-                        <label htmlFor="saleRate" className="text-md ">
-                            খুচরা বিক্রয় রেট :
-                        </label>
-                        <input
-                            type="number"
-                            name="saleRate"
-                            id="saleRate"
-                            value={formData.saleRate}
-                            onChange={handleInputChange}
-                            placeholder="খুচরা বিক্রয় রেট প্রদান করুন"
-                            className="py-2 px-3 block outline-none rounded-sm border border-teal-400"
-                        />
-                    </div>
-
-                    {/* Wholesale Rate */}
-                    <div className="flex flex-col">
-                        <label htmlFor="wholeSales" className="text-md ">
-                            পাইকারি বিক্রয় রেট :
-                        </label>
-                        <input
-                            type="number"
-                            name="wholeSales"
-                            id="wholeSales"
-                            value={formData.wholeSales}
-                            onChange={handleInputChange}
-                            placeholder="পাইকারি বিক্রয় রেট প্রদান করুন"
-                            className="py-2 px-3 block outline-none rounded-sm border border-teal-400"
-                        />
-                    </div>
 
                     {/* Product Image */}
                     <div className="flex flex-col">
@@ -256,7 +204,7 @@ export default function UpdateProduct() {
                     <div className="col-span-3 flex justify-center mt-4">
                         <button
                             type="submit"
-                            className="bg-teal-600 text-white font-semibold py-2 px-6 rounded hover:bg-teal-700 transition"
+                            className="bg-[#e94375d8] text-white font-semibold py-2 px-6 rounded hover:bg-[#e94374f5] transition"
                         >
                             আপডেট করুন
                         </button>

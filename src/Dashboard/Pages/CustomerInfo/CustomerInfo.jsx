@@ -8,12 +8,46 @@ export default function CustomerTable() {
     const [payammount,setPayammount] = useState('')
     const [fetch,setFetch] = useState(false)
 
+    console.log("jjj",customers);
+
+
+    const handleDelete = async (id) => {
+        // Show confirmation dialog
+        Swal.fire({
+          title: "Are you sure?",
+          text: "You won't be able to revert this!",
+          icon: "warning",
+          showCancelButton: true,
+          confirmButtonColor: "#3085d6",
+          cancelButtonColor: "#d33",
+          confirmButtonText: "Yes, delete it!",
+        }).then(async (result) => {
+          if (result.isConfirmed) {
+            try {
+              // Call the backend API to delete the item
+              const response = await axios.delete(
+                `http://localhost:5000/paid-data-delete/${id}`
+              );
+              setFetch(true)
+              Swal.fire("Deleted!", response.data.message, "success");
+              // Optionally refresh or update the UI here
+            } catch (error) {
+              Swal.fire(
+                "Error!",
+                error.response?.data?.message || "Failed to delete the item.",
+                "error"
+              );
+            }
+          }
+        });
+      };
+
 
     // Fetching data from MongoDB via an API
     useEffect(() => {
         async function fetchCustomers() {
             try {
-                const response = await axios.get('https://pos-soft-server.vercel.app/customers-info');
+                const response = await axios.get('http://localhost:5000/customers-info');
                 setCustomers(response.data);
             } catch (error) {
                 console.error("Error fetching customer data:", error);
@@ -57,7 +91,7 @@ export default function CustomerTable() {
 
     
         try {
-            const res = await axios.put(`https://pos-soft-server.vercel.app/customer-pay/${id}`, { payammount });
+            const res = await axios.put(`http://localhost:5000/customer-pay/${id}`, { payammount });
             console.log(res.data);
             if(res.data.result.modifiedCount > 0){
                 setFetch(!fetch)
@@ -93,9 +127,11 @@ export default function CustomerTable() {
                             <th className="py-3 px-6 text-left">নাম</th>
                             <th className="py-3 px-6 text-left">মোবাইল</th>
                             <th className="py-3 px-6 text-left">ঠিকানা</th>
+                            <th className="py-3 px-6 text-left">Date</th>
                             <th className="py-3 px-6 text-left">মোট বাকী</th>
                             <th className="py-3 px-6 text-left">জমা </th>
                             <th className="py-3 px-6 text-left">বিবরণ </th>
+                            <th className="py-3 px-6 text-left">delete</th>
                         </tr>
                     </thead>
 
@@ -108,6 +144,7 @@ export default function CustomerTable() {
                             <td className="py-3 px-6">{customer.customerData?.label}</td>
                             <td className="py-3 px-6">{customer.customerData?.mobile}</td>
                             <td className="py-3 px-6">{customer.customerData?.address}</td>
+                            <td className="py-3 px-6">{customer.customerData?.date ? customer.customerData?.date : "No Date"}</td>
                             <td className="py-3 px-6">{customer.due}</td>
                             <td className="py-3 px-6 flex">
                                 <input className='w-32 border border-red-600/65 outline-none p-1' type="number" onChange={(e) => setPayammount(e.target.value)} />
@@ -115,6 +152,9 @@ export default function CustomerTable() {
                             </td>
                             <td>
                                 <Link to={`/dashboard/customer-info/${customer._id}`} className='bg-[#e94374f5] text-white font-semibold px-3 py-2 mt-2 rounded-md'>সব দেখুন </Link>
+                            </td>
+                            <td className="">
+                                <button onClick={()=>handleDelete(customer._id)} className='bg-red-600/85 text-white font-semibold px-2 py-[6px] rounded-md'>Delete</button>
                             </td>
                         </tr>
                                 )

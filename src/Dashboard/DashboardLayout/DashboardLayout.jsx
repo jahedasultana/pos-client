@@ -13,7 +13,7 @@ const DashboardLayout = () => {
     return (
         <div className="flex">
             <div className="w-[15%] bg-[#dc4b76f5] min-h-screen ">
-                <ul className="space-y-4 items-center p-2 text-white">
+                <ul className="space-y-4 items-center p-4 text-white">
                     <li><Link to='/dashboard'>Home</Link></li>
                     <li><Link to='sales'>বিক্রয় এন্ট্রি</Link></li>
                     <li><Link to='add-product'>পণ্য যোগ করুন</Link></li>

@@ -5,13 +5,10 @@ import Swal from "sweetalert2";
 
 export default function AddProducts() {
   const [formData, setFormData] = useState({
-    productCode: "",
     productName: "",
     productQty: "",
     productCategory: "",
     buyRate: "",
-    saleRate: "",
-    wholeSales: "",
     productImage: null,
   });
 
@@ -52,7 +49,7 @@ export default function AddProducts() {
       };
 
       // Send product data to your server
-      const response = await axios.post("https://pos-soft-server.vercel.app/add-product", productData);
+      const response = await axios.post("http://localhost:5000/add-product", productData);
       const result = response.data;
       console.log("Product added successfully:", result);
 
@@ -66,13 +63,10 @@ export default function AddProducts() {
 
       // Reset the form after successful submission
       setFormData({
-        productCode: "",
         productName: "",
         productQty: "",
         productCategory: "",
         buyRate: "",
-        saleRate: "",
-        wholeSales: "",
         productImage: null,
       });
 
@@ -93,7 +87,7 @@ export default function AddProducts() {
   };
 
   return (
-    <div className="w-full h-auto bg-red-200 py-8">
+    <div className="w-full h-screen bg-red-200 py-8">
       <h1 className="text-center text-lg md:text-3xl font-semibold mb-6 text-[#e94374f5]">
         প্রোডাক্ট যোগ করুন
       </h1>
@@ -104,22 +98,7 @@ export default function AddProducts() {
           onSubmit={handleSubmit}
           className="grid grid-cols-1 md:grid-cols-3 gap-3"
         >
-          {/* Product Code */}
-          <div className="flex flex-col">
-            <label htmlFor="productCode" className="text-sm font-medium mb-1">
-              প্রোডাক্ট কোড :
-            </label>
-            <input
-              type="text"
-              name="productCode"
-              id="productCode"
-              value={formData.productCode}
-              onChange={handleInputChange}
-              placeholder="প্রোডাক্ট কোড"
-              className="py-1.5 px-2 text-sm outline-none rounded border border-teal-400 focus:border-teal-600 transition"
-            />
-          </div>
-
+          
           {/* Product Name */}
           <div className="flex flex-col">
             <label htmlFor="productName" className="text-sm font-medium mb-1">
@@ -179,38 +158,6 @@ export default function AddProducts() {
               value={formData.buyRate}
               onChange={handleInputChange}
               placeholder="ক্রয় রেট প্রদান করুন"
-              className="py-1.5 px-2 text-sm outline-none rounded border border-teal-400 focus:border-teal-600 transition"
-            />
-          </div>
-
-          {/* Sale Rate */}
-          <div className="flex flex-col">
-            <label htmlFor="saleRate" className="text-sm font-medium mb-1">
-              খুচরা বিক্রয় রেট :
-            </label>
-            <input
-              type="number"
-              name="saleRate"
-              id="saleRate"
-              value={formData.saleRate}
-              onChange={handleInputChange}
-              placeholder="খুচরা বিক্রয় রেট প্রদান করুন"
-              className="py-1.5 px-2 text-sm outline-none rounded border border-teal-400 focus:border-teal-600 transition"
-            />
-          </div>
-
-          {/* Wholesale Rate */}
-          <div className="flex flex-col">
-            <label htmlFor="wholeSales" className="text-sm font-medium mb-1">
-              পাইকারি বিক্রয় রেট :
-            </label>
-            <input
-              type="number"
-              name="wholeSales"
-              id="wholeSales"
-              value={formData.wholeSales}
-              onChange={handleInputChange}
-              placeholder="পাইকারি বিক্রয় রেট প্রদান করুন"
               className="py-1.5 px-2 text-sm outline-none rounded border border-teal-400 focus:border-teal-600 transition"
             />
           </div>

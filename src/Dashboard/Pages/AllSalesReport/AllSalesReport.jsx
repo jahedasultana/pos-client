@@ -6,12 +6,14 @@ export default function AllSalesReport() {
     const [selectedSale, setSelectedSale] = useState(null); // To store selected sale for details
     const [searchTerm, setSearchTerm] = useState(""); // State for search term
 
+    console.log("salse report",sales);
+
     // Fetch sales data from MongoDB
     const fetchSales = async () => {
         try {
-            const response = await axios.get("https://pos-soft-server.vercel.app/sales-report");
+            const response = await axios.get("http://localhost:5000/sales-report");
             setSales(response.data);
-            console.log(response.data);
+            // console.log(response.data);
         } catch (error) {
             console.error("Error fetching sales data:", error);
         }
@@ -52,6 +54,7 @@ export default function AllSalesReport() {
                         <th className="p-2">ঠিকানা</th>
                         <th className="p-2">মোবাইল</th>
                         <th className="p-2">বাকি</th>
+                        <th className="p-2">Date</th>
                         <th className="p-2">দেখুন</th>
                     </tr>
                 </thead>
@@ -62,6 +65,7 @@ export default function AllSalesReport() {
                             <td className="py-2 px-4 text-center border border-gray-300">{sale?.customerData?.address}</td>
                             <td className="py-2 px-4 text-center border border-gray-300">{sale?.customerData?.mobile}</td>
                             <td className="py-2 px-4 text-center border border-gray-300">{sale?.due}</td>
+                            <td className="py-2 px-4 text-center border border-gray-300">{sale?.customerData.date ? sale?.customerData.date : 'No date' }</td>
                             <td className="py-2 px-4 text-center border border-gray-300">
                                 <button
                                     onClick={() => setSelectedSale(sale)}
@@ -85,8 +89,7 @@ export default function AllSalesReport() {
                         <p><strong className="text-sm">কাস্টমারের ঠিকানা:</strong> {selectedSale.customerData.address}</p>
                         <p><strong className="text-sm">শুধু পণ্যের দাম :</strong> {selectedSale?.subtotal}</p>
                         <p><strong className="text-sm">কমিশন :</strong> {selectedSale?.discount}</p>
-                        <p><strong className="text-sm">ভ্যাট :</strong> {selectedSale?.vat}</p>
-                        <p><strong className="text-sm">পরিবহন / লেবার খরচ :</strong> {selectedSale?.transport}</p>
+                        
                         <p><strong className="text-sm">মোট টাকা :</strong> {selectedSale?.totalAmount}</p>
                         <p><strong className="text-sm">জমার পরিমাণ :</strong> {selectedSale?.cashPaid}</p>
                         <p><strong className="text-sm">বাকি :</strong> {selectedSale?.due}</p>

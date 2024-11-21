@@ -23,11 +23,13 @@ const CustomerInfo = () => {
 
     const [customers, setCustomers] = useState([]);
 
+    console.log("cussss",customers);
+
     // Fetch customers from MongoDB
     useEffect(() => {
         const fetchCustomers = async () => {
             try {
-                const response = await axios.get("https://pos-soft-server.vercel.app/customers"); // Replace with your API route
+                const response = await axios.get("http://localhost:5000/customers"); // Replace with your API route
                 setCustomers(response.data); // Assuming the data is an array of customer objects
             } catch (error) {
                 console.error("Error fetching customer data:", error);

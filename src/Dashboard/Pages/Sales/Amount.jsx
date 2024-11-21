@@ -7,17 +7,16 @@ import { useNavigate } from "react-router-dom";
 const Amount = () => {
     const { selectedCustomer, subtotalAmount, productsDetails, setInvoiceId, updateSelectedCustomerDue } = useAuth();
     const navigate = useNavigate();
-    const [remining,setRemining] = useState()
+    const [remining, setRemining] = useState()
     const [formData, setFormData] = useState({
         subtotal: 0,
         discount: 0,
-        vat: 0,
-        transport: 0,
         totalAmount: 0,
         cashPaid: 0,
         due: 0,
         totalDue: parseInt(selectedCustomer?.totalDue) || 0,
     });
+    const [selectedDate, setSelectedDate] = useState("");
 
     useEffect(() => {
         if (remining < 0) {
@@ -62,10 +61,9 @@ const Amount = () => {
     }, [subtotalAmount]);
 
     useEffect(() => {
-        const { subtotal, discount, vat, transport, cashPaid } = formData;
+        const { subtotal, discount, cashPaid } = formData;
         const discountAmount = (subtotal * discount) / 100;
-        const vatAmount = (subtotal * vat) / 100;
-        const calculatedTotal = subtotal - discountAmount + vatAmount + transport;
+        const calculatedTotal = subtotal - discountAmount;
         const dueAmount = calculatedTotal - cashPaid;
 
         setFormData((prevData) => ({
@@ -74,14 +72,19 @@ const Amount = () => {
             due: dueAmount > 0 ? dueAmount : 0,
             totalDue: (dueAmount > 0 ? dueAmount : 0) + parseInt(selectedCustomer?.totalDue),
         }));
-    }, [formData.subtotal, formData.discount, formData.vat, formData.transport, formData.cashPaid, selectedCustomer]);
+    }, [formData.subtotal, formData.discount, formData.cashPaid, selectedCustomer]);
 
 
-    useEffect(()=>{
+    useEffect(() => {
         const totalAmountWithPreviousDue = parseInt(formData.totalAmount) + parseInt(selectedCustomer?.totalDue);
         const remainAmount = totalAmountWithPreviousDue - parseInt(formData.cashPaid);
         setRemining(remainAmount)
-    },[formData.cashPaid, formData.totalAmount, selectedCustomer?.totalDue])
+    }, [formData.cashPaid, formData.totalAmount, selectedCustomer?.totalDue])
+
+    // handle date change
+    const handleDateChange = (e) => {
+        setSelectedDate(e.target.value);
+    };
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -101,10 +104,6 @@ const Amount = () => {
             return;
         }
 
-        // const totalAmountWithPreviousDue = parseInt(formData.totalAmount) + parseInt(selectedCustomer?.totalDue);
-        // const remainAmount = totalAmountWithPreviousDue - parseInt(formData.cashPaid);
-        // setRemining(remainAmount)
-
         // upper code is here
 
         const { totalDue, ...customerData } = selectedCustomer;
@@ -112,10 +111,9 @@ const Amount = () => {
         const currentTransactionData = {
             subtotal: formData.subtotal,
             discount: formData.discount,
-            vat: formData.vat,
-            transport: formData.transport,
             totalAmount: formData.totalAmount,
             cashPaid: formData.cashPaid,
+            date: selectedDate,
             // totalDue: formData.totalDue,
             products: productsDetails,
             // before have remainAmount - if work not chabge:: [zahid-7:04pm]
@@ -125,8 +123,8 @@ const Amount = () => {
         };
 
         try {
-            const salesResponse = await axios.post('https://pos-soft-server.vercel.app/changeable', currentTransactionData);
-            console.log("i found the data",salesResponse?.data?.insertedId);
+            const salesResponse = await axios.post('http://localhost:5000/changeable', currentTransactionData);
+            console.log("i found the data", salesResponse?.data?.insertedId);
 
             if (salesResponse) {
                 const productId = salesResponse?.data?.insertedId;
@@ -159,6 +157,18 @@ const Amount = () => {
                     <div className="bg-red-200 border border-red-500 p-4 rounded text-sm">
                         <h2 className="font-bold mb-2">লেনদেন তথ্য </h2>
 
+                        <div className="mb-1">
+                            <label htmlFor="date" className="mr-2">তারিখ</label>
+                            <input
+                                type="date"
+                                id="date"
+                                name="date"
+                                value={selectedDate}
+                                onChange={handleDateChange}
+                                className="border p-1 rounded w-full"
+                            />
+                        </div>
+
                         <div className="mb-1 flex items-center">
                             <label htmlFor="subtotal" className="mr-2 w-[20%]">সাময়িক টাকা</label>
                             <input
@@ -180,40 +190,11 @@ const Amount = () => {
                                     name="discount"
                                     value={formData.discount}
                                     onChange={handleInputChange}
-                                    placeholder="0"
+                                    placeholder="কমিশন"
                                     className="border p-1 rounded w-[90%]"
                                 />
                                 <span className="w-[10%]">%</span>
                             </div>
-                        </div>
-
-                        <div className="mb-1 flex items-center">
-                            <label htmlFor="vat" className="mr-2 w-[20%]">ভ্যাট</label>
-                            <div className="flex gap-2 w-[80%] items-center">
-                                <input
-                                    type="number"
-                                    id="vat"
-                                    name="vat"
-                                    value={formData.vat}
-                                    onChange={handleInputChange}
-                                    placeholder="0"
-                                    className="border p-1 rounded w-[90%]"
-                                />
-                                <span className="w-[10%]">%</span>
-                            </div>
-                        </div>
-
-                        <div className="mb-1">
-                            <label htmlFor="transport" className="mr-2">পরিবহন / লেবার খরচ</label>
-                            <input
-                                type="number"
-                                id="transport"
-                                name="transport"
-                                value={formData.transport}
-                                onChange={handleInputChange}
-                                placeholder="0"
-                                className="border p-1 rounded w-full"
-                            />
                         </div>
 
                         <div className="mb-1">
@@ -238,6 +219,7 @@ const Amount = () => {
                                 value={formData.cashPaid}
                                 onChange={handleInputChange}
                                 className="border p-1 rounded w-full"
+                                placeholder="ক্যাশ জমা"
                             />
                         </div>
 

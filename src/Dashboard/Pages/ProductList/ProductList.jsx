@@ -10,7 +10,7 @@ const ProductsList = () => {
     // Fetch categories from the backend
     const fetchCategories = async () => {
         try {
-            const response = await axios.get("https://pos-soft-server.vercel.app/products-report");
+            const response = await axios.get("http://localhost:5000/products-report");
             const allProducts = response.data;
 
             const distinctCategories = [
@@ -26,7 +26,7 @@ const ProductsList = () => {
     // Fetch products from the backend
     const fetchProducts = async (category) => {
         try {
-            const response = await axios.get("https://pos-soft-server.vercel.app/products-report", {
+            const response = await axios.get("http://localhost:5000/products-report", {
                 params: { category }
             });
             setProducts(response.data);
@@ -48,11 +48,8 @@ const ProductsList = () => {
         const searchTermLower = searchTerm.toLowerCase();
         return (
             product.productName.toLowerCase().includes(searchTermLower) ||
-            product.productCode.toLowerCase().includes(searchTermLower) ||
             product.productCategory.toLowerCase().includes(searchTermLower) ||
-            product.buyRate.toString().includes(searchTermLower) || // Include buy rate
-            product.saleRate.toString().includes(searchTermLower) || // Include sale rate
-            product.wholeSales.toString().includes(searchTermLower)   // Include whole sales
+            product.buyRate.toString().includes(searchTermLower) // Include buy rate
         );
     });
 
@@ -89,20 +86,18 @@ const ProductsList = () => {
                 <table className="min-w-full border-collapse text-sm">
                     <thead>
                         <tr className="bg-[#e94374f5] text-white font-normal">
-                            <th className="p-2">প্রোডাক্ট কোড</th>
+                            <th className="p-2">সিরিয়াল নাম্বার</th>
                             <th className="p-2">প্রোডাক্ট নাম</th>
                             <th className="p-2">প্রোডাক্টের শ্রেণী</th>
                             <th className="p-2">ক্রয় দাম</th>
-                            <th className="p-2">খুচরা বিক্রয় দাম</th>
-                            <th className="p-2">পাইকারি বিক্রয় দাম</th>
                         </tr>
                     </thead>
                     <tbody>
                         {filteredProducts.length > 0 ? (
-                            filteredProducts.map((product) => (
+                            filteredProducts.map((product,index) => (
                                 <tr key={product._id} className="border-b">
                                     <td className="py-2 px-4 text-center border border-gray-300">
-                                        {product.productCode}
+                                        {index + 1}
                                     </td>
                                     <td className="py-2 px-4 text-center border border-gray-300">
                                         {product.productName}
@@ -113,12 +108,7 @@ const ProductsList = () => {
                                     <td className="py-2 px-4 text-center border border-gray-300">
                                         {product.buyRate}
                                     </td>
-                                    <td className="py-2 px-4 text-center border border-gray-300">
-                                        {product.saleRate}
-                                    </td>
-                                    <td className="py-2 px-4 text-center border border-gray-300">
-                                        {product.wholeSales}
-                                    </td>
+                                   
                                 </tr>
                             ))
                         ) : (

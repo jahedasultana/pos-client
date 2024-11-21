@@ -9,9 +9,10 @@ const SalesInvoice = () => {
     const { id } = useParams();
     const invoiceRef = useRef();
 
+
     useEffect(() => {
         const allSalesData = async () => {
-            const res = await axios.get(`https://pos-soft-server.vercel.app/all-sales-data/${id}`);
+            const res = await axios.get(`http://localhost:5000/all-sales-data/${id}`);
             setSalesData(res.data);
             console.log(res.data);
         };
@@ -71,10 +72,9 @@ const SalesInvoice = () => {
                                 <span className="font-semibold">ইনভয়েজ নাম্বার:</span> {id}
                             </p>
                             <p>
-                                {/* <span className="font-semibold">তারিখ :</span> {salesData?.creationDate.split('T')[0]},{' '}
-                            {salesData?.creationDate.split('T')[1].split('.')[0]} */}
-                                12/12/2024
+                                <span className="font-semibold">তারিখ :</span> {salesData?.customerData?.date}
                             </p>
+
                         </div>
                     </div>
                     {/* Customer Info */}
@@ -150,18 +150,18 @@ const SalesInvoice = () => {
                                         </td>
                                         <td className="text-right px-4">{salesData?.discount}<span className="font-extrabold"> ৳</span> </td>
                                     </tr>
-                                    <tr className="border border-gray-500">
+                                    {/* <tr className="border border-gray-500">
                                         <td className="text-right pr-4 px-2">
                                             <strong>ভ্যাট:</strong>
                                         </td>
                                         <td className="text-right px-4">{salesData?.vat}<span className="font-extrabold"> %</span> </td>
-                                    </tr>
-                                    <tr className="border border-gray-500">
+                                    </tr> */}
+                                    {/* <tr className="border border-gray-500">
                                         <td className="text-right pr-4 px-2">
                                             <strong>লেবার/গাড়ি বিল:</strong>
                                         </td>
                                         <td className="text-right px-4">{salesData?.transport}<span className="font-extrabold"> ৳</span> </td>
-                                    </tr>
+                                    </tr> */}
                                     <tr className="border border-gray-500">
                                         <td className="text-right pr-4 px-2">
                                             <strong>জমার পরিমাণ:</strong>
@@ -203,7 +203,7 @@ const SalesInvoice = () => {
                     </div>
                 </div>
 
-               
+
                 {/* div 2 */}
                 <div className="text-center items-baseline border-2 border-gray-800 bg-gray-200 mt-8">
                     <p className="font-semibold py-[2px]">

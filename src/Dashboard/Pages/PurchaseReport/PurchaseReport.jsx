@@ -9,7 +9,7 @@ const PurchaseReport = () => {
   useEffect(() => {
     // Fetch purchase report from the server
     const fetchData = async () => {
-        const res = await axios.get('https://pos-soft-server.vercel.app/purchase-report')
+        const res = await axios.get('http://localhost:5000/purchase-report')
         setData(res.data)
     }
     fetchData()

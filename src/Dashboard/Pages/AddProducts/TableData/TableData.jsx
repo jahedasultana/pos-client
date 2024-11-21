@@ -10,7 +10,7 @@ export default function TableData() {
   // Function to fetch data from the backend
   const fetchProducts = async () => {
     try {
-      const response = await axios.get("https://pos-soft-server.vercel.app/products");
+      const response = await axios.get("http://localhost:5000/products");
       setProducts(response.data);
     } catch (error) {
       console.error("Error fetching products:", error);
@@ -30,7 +30,7 @@ export default function TableData() {
         confirmButtonText: "Delete!",
       }).then(async (result) => {
         if (result.isConfirmed) {
-          await axios.delete(`https://pos-soft-server.vercel.app/products/${id}`);
+          await axios.delete(`http://localhost:5000/products/${id}`);
           setProducts(products.filter((product) => product._id !== id));
           Swal.fire("Deleted!", "ডিলেট সফল হয়েছে", "success");
         }
@@ -53,13 +53,10 @@ export default function TableData() {
           <thead>
             <tr className="bg-[#e94374f5] text-white text-xs font-semibold">
               <th className="p-2">ক্রমিক নং</th>
-              <th className="p-2">প্রোডাক্ট কোড</th>
               <th className="p-2">প্রোডাক্ট নাম</th>
               <th className="p-2">প্রোডাক্টের শ্রেণী</th>
               <th className="p-2">স্টকের পরিমান</th>
               <th className="p-2">ক্রয় মূল্য</th>
-              <th className="p-2">খুচরা বিক্রয় মূল্য</th>
-              <th className="p-2">পাইকারি বিক্রয় মূল্য</th>
               <th className="p-2">প্রক্রিয়া</th>
             </tr>
           </thead>
@@ -67,15 +64,12 @@ export default function TableData() {
             {products.map((product, index) => (
               <tr key={product._id} className="text-center">
                 <td className="border px-2 py-1">{index + 1}</td>
-                <td className="border px-2 py-1">{product.productCode}</td>
                 <td className="border px-2 py-1">{product.productName}</td>
                 <td className="border px-2 py-1">{product.productCategory}</td>
                 <td className="border px-2 py-1">{product.productQty}</td>
                 <td className="border px-2 py-1">{product.buyRate}</td>
-                <td className="border px-2 py-1">{product.saleRate}</td>
-                <td className="border px-2 py-1">{product.wholeSales}</td>
                 <td className="border px-2 py-1">
-                  <div className="flex justify-center gap-2">
+                  <div className="flex justify-center gap-5">
                     <Link to={`/update-product/${product._id}`}>
                       <MdEdit className="text-green-500 hover:text-green-700 cursor-pointer" />
                     </Link>
