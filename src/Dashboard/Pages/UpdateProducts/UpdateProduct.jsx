@@ -21,7 +21,7 @@ export default function UpdateProduct() {
     useEffect(() => {
         async function fetchProductData() {
             try {
-                const response = await axios.get(`http://localhost:5000/products/${id}`);
+                const response = await axios.get(`https://pos-soft-server.vercel.app/products/${id}`);
                 const product = response.data;
                 setFormData({
                     productName: product.productName,
@@ -82,7 +82,7 @@ export default function UpdateProduct() {
         };
 
         try {
-            const response = await axios.put(`http://localhost:5000/products/${id}`, updatedProductData);
+            const response = await axios.put(`https://pos-soft-server.vercel.app/products/${id}`, updatedProductData);
             console.log(response)
             navigate('/dashboard/add-product')
             Swal.fire({

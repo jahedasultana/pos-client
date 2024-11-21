@@ -49,7 +49,7 @@ export default function AddProducts() {
       };
 
       // Send product data to your server
-      const response = await axios.post("http://localhost:5000/add-product", productData);
+      const response = await axios.post("https://pos-soft-server.vercel.app/add-product", productData);
       const result = response.data;
       console.log("Product added successfully:", result);
 

@@ -17,7 +17,7 @@ const PurchaseReportDetails = () => {
   useEffect(() => {
     const fetchData = async () => {
       const res = await axios.get(
-        `http://localhost:5000/single-product-report/${id}`
+        `https://pos-soft-server.vercel.app/single-product-report/${id}`
       );
       setProducts(res.data);
       setTableShow(res.data?.serilalPay)
@@ -57,7 +57,7 @@ const PurchaseReportDetails = () => {
 
     try {
       const res = await axios.put(
-        `http://localhost:5000/update-pay-amount/${id}`,
+        `https://pos-soft-server.vercel.app/update-pay-amount/${id}`,
         data
       );
       if (res.data) {

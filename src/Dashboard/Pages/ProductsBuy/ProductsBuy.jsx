@@ -23,7 +23,7 @@ const CompanyProductForm = () => {
     };
 
     try {
-      const response = await axios.post('http://localhost:5000/company-products', productsBuyDetails);
+      const response = await axios.post('https://pos-soft-server.vercel.app/company-products', productsBuyDetails);
       console.log('Response from backend:', response.data);
 
       if (response.data.result.insertedId) {

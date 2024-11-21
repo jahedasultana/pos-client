@@ -43,7 +43,7 @@ const UpdatePopup = ({ item, onClose, onUpdate }) => {
     }
 
     try {
-      const res = await axios.put(`http://localhost:5000/payment-update/${id}`, data)
+      const res = await axios.put(`https://pos-soft-server.vercel.app/payment-update/${id}`, data)
       if (res.data.modifiedCount > 0) {
         Swal.fire({
           title: "WOW",
@@ -120,7 +120,7 @@ const ProductsBuyReport = (reface) => {
   const [selectedItem, setSelectedItem] = useState(null);
 
   const fetchData = async () => {
-    const res = await axios.get('http://localhost:5000/company-buy-report');
+    const res = await axios.get('https://pos-soft-server.vercel.app/company-buy-report');
     setData(res.data);
   };
 

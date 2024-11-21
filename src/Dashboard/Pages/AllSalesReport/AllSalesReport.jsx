@@ -11,7 +11,7 @@ export default function AllSalesReport() {
     // Fetch sales data from MongoDB
     const fetchSales = async () => {
         try {
-            const response = await axios.get("http://localhost:5000/sales-report");
+            const response = await axios.get("https://pos-soft-server.vercel.app/sales-report");
             setSales(response.data);
             // console.log(response.data);
         } catch (error) {

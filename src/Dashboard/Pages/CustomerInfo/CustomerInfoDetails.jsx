@@ -11,7 +11,7 @@ const CustomerInfoDetails = () => {
 
     useEffect(()=>{
         const fetchData = async () => {
-            const res = await axios.get(`http://localhost:5000/customers-info/${id}`);
+            const res = await axios.get(`https://pos-soft-server.vercel.app/customers-info/${id}`);
             setDetails(res.data)
         }
         fetchData()

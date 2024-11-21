@@ -12,7 +12,7 @@ const SalesInvoice = () => {
 
     useEffect(() => {
         const allSalesData = async () => {
-            const res = await axios.get(`http://localhost:5000/all-sales-data/${id}`);
+            const res = await axios.get(`https://pos-soft-server.vercel.app/all-sales-data/${id}`);
             setSalesData(res.data);
             console.log(res.data);
         };

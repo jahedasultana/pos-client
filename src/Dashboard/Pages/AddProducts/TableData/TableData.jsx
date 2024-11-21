@@ -10,7 +10,7 @@ export default function TableData() {
   // Function to fetch data from the backend
   const fetchProducts = async () => {
     try {
-      const response = await axios.get("http://localhost:5000/products");
+      const response = await axios.get("https://pos-soft-server.vercel.app/products");
       setProducts(response.data);
     } catch (error) {
       console.error("Error fetching products:", error);
@@ -30,7 +30,7 @@ export default function TableData() {
         confirmButtonText: "Delete!",
       }).then(async (result) => {
         if (result.isConfirmed) {
-          await axios.delete(`http://localhost:5000/products/${id}`);
+          await axios.delete(`https://pos-soft-server.vercel.app/products/${id}`);
           setProducts(products.filter((product) => product._id !== id));
           Swal.fire("Deleted!", "ডিলেট সফল হয়েছে", "success");
         }
