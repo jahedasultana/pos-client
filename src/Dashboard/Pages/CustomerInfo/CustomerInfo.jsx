@@ -5,42 +5,43 @@ import Swal from 'sweetalert2';
 
 export default function CustomerTable() {
     const [customers, setCustomers] = useState([]);
-    const [payammount,setPayammount] = useState('')
-    const [fetch,setFetch] = useState(false)
+    const [payammount, setPayammount] = useState('')
+    const [paidDate, setpaidDate] = useState()
+    const [fetch, setFetch] = useState(false)
 
-    console.log("jjj",customers);
+    console.log("jjj", customers);
 
 
     const handleDelete = async (id) => {
         // Show confirmation dialog
         Swal.fire({
-          title: "Are you sure?",
-          text: "You won't be able to revert this!",
-          icon: "warning",
-          showCancelButton: true,
-          confirmButtonColor: "#3085d6",
-          cancelButtonColor: "#d33",
-          confirmButtonText: "Yes, delete it!",
+            title: "Are you sure?",
+            text: "You won't be able to revert this!",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#3085d6",
+            cancelButtonColor: "#d33",
+            confirmButtonText: "Yes, delete it!",
         }).then(async (result) => {
-          if (result.isConfirmed) {
-            try {
-              // Call the backend API to delete the item
-              const response = await axios.delete(
-                `https://pos-soft-server.vercel.app/paid-data-delete/${id}`
-              );
-              setFetch(true)
-              Swal.fire("Deleted!", response.data.message, "success");
-              // Optionally refresh or update the UI here
-            } catch (error) {
-              Swal.fire(
-                "Error!",
-                error.response?.data?.message || "Failed to delete the item.",
-                "error"
-              );
+            if (result.isConfirmed) {
+                try {
+                    // Call the backend API to delete the item
+                    const response = await axios.delete(
+                        `https://pos-soft-server.vercel.app/paid-data-delete/${id}`
+                    );
+                    setFetch(true)
+                    Swal.fire("Deleted!", response.data.message, "success");
+                    // Optionally refresh or update the UI here
+                } catch (error) {
+                    Swal.fire(
+                        "Error!",
+                        error.response?.data?.message || "Failed to delete the item.",
+                        "error"
+                    );
+                }
             }
-          }
         });
-      };
+    };
 
 
     // Fetching data from MongoDB via an API
@@ -56,11 +57,27 @@ export default function CustomerTable() {
         fetchCustomers();
     }, [fetch]);
 
-    const handlePay = async (id,due) => {
-        console.log(due);
-        console.log(payammount);
+    const handlePay = async (customer) => {
+        // console.log(customer,paidDate, payammount);
 
-        if (payammount == due) {
+        const data = {
+            paidDate,
+            payammount,
+            previousDue: customer?.due,
+        }
+
+        // console.log(data);
+
+        if (!data.paidDate) {
+            Swal.fire({
+                title: "Wait!",
+                text: "Please select a payment date.",
+                icon: "error",
+            });
+            return;
+        }
+
+        if (payammount == data.previousDue) {
             Swal.fire({
                 title: "Wait!",
                 text: "already paid",
@@ -70,30 +87,30 @@ export default function CustomerTable() {
         }
 
         // Check if payammount is more than due
-    if (payammount > due) {
-        Swal.fire({
-            title: "Wait!",
-            text: "Payment amount cannot exceed the due amount.",
-            icon: "error"
-        });
-        return;
-    }
+        if (payammount > data.previousDue) {
+            Swal.fire({
+                title: "Wait!",
+                text: "Payment amount cannot exceed the due amount.",
+                icon: "error"
+            });
+            return;
+        }
 
-    // Check if payammount is valid (not negative or zero)
-    if (payammount <= 0) {
-        Swal.fire({
-            title: "Wait!",
-            text: "Please enter a valid payment amount.",
-            icon: "error"
-        });
-        return;
-    }
+        // Check if payammount is valid (not negative or zero)
+        if (payammount <= 0) {
+            Swal.fire({
+                title: "Wait!",
+                text: "Please enter a valid payment amount.",
+                icon: "error"
+            });
+            return;
+        }
 
-    
+
         try {
-            const res = await axios.put(`https://pos-soft-server.vercel.app/customer-pay/${id}`, { payammount });
+            const res = await axios.put(`https://pos-soft-server.vercel.app/customer-pay/${customer._id}`, { data });
             console.log(res.data);
-            if(res.data.result.modifiedCount > 0){
+            if (res.data.result.modifiedCount > 0) {
                 setFetch(!fetch)
                 Swal.fire({
                     title: "Wait!",
@@ -105,7 +122,7 @@ export default function CustomerTable() {
             console.log(error);
         }
     };
-    
+
 
     return (
         <div className="container mx-auto p-4">
@@ -127,8 +144,9 @@ export default function CustomerTable() {
                             <th className="py-3 px-6 text-left">নাম</th>
                             <th className="py-3 px-6 text-left">মোবাইল</th>
                             <th className="py-3 px-6 text-left">ঠিকানা</th>
-                            <th className="py-3 px-6 text-left">Date</th>
+                            <th className="py-3 px-6 text-left">salse Date</th>
                             <th className="py-3 px-6 text-left">মোট বাকী</th>
+                            <th className="py-3 px-6 text-left">Give Date</th>
                             <th className="py-3 px-6 text-left">জমা </th>
                             <th className="py-3 px-6 text-left">বিবরণ </th>
                             <th className="py-3 px-6 text-left">delete</th>
@@ -137,26 +155,29 @@ export default function CustomerTable() {
 
                     <tbody>
                         {
-                            customers.map((customer,index) => {
-                                return(
+                            customers.map((customer, index) => {
+                                return (
                                     <tr key={customer._id} className="bg-gray-100">
-                            <td className="py-3 px-6">{index +1}</td>
-                            <td className="py-3 px-6">{customer.customerData?.label}</td>
-                            <td className="py-3 px-6">{customer.customerData?.mobile}</td>
-                            <td className="py-3 px-6">{customer.customerData?.address}</td>
-                            <td className="py-3 px-6">{customer.customerData?.date ? customer.customerData?.date : "No Date"}</td>
-                            <td className="py-3 px-6">{customer.due}</td>
-                            <td className="py-3 px-6 flex">
-                                <input className='w-32 border border-red-600/65 outline-none p-1' type="number" onChange={(e) => setPayammount(e.target.value)} />
-                                <button onClick={()=>handlePay(customer._id,customer.due)} className='bg-red-500 px-3 py-2 text-white ml-2 w-1/3'>Pay</button>
-                            </td>
-                            <td>
-                                <Link to={`/dashboard/customer-info/${customer._id}`} className='bg-[#e94374f5] text-white font-semibold px-3 py-2 mt-2 rounded-md'>সব দেখুন </Link>
-                            </td>
-                            <td className="">
-                                <button onClick={()=>handleDelete(customer._id)} className='bg-red-600/85 text-white font-semibold px-2 py-[6px] rounded-md'>Delete</button>
-                            </td>
-                        </tr>
+                                        <td className="py-3 px-6">{index + 1}</td>
+                                        <td className="py-3 px-6">{customer.customerData?.label}</td>
+                                        <td className="py-3 px-6">{customer.customerData?.mobile}</td>
+                                        <td className="py-3 px-6">{customer.customerData?.address}</td>
+                                        <td className="py-3 px-6">{customer.customerData?.date ? customer.customerData?.date : "No Date"}</td>
+                                        <td className="py-3 px-6">{customer.due}</td>
+                                        <td className="py-3">
+                                            <input className='p-2 w-[120px]' type="date" name="paidDate" id="paidDate" onChange={(e) => setpaidDate(e.target.value)} />
+                                        </td>
+                                        <td className="py-3 px-[3px] flex">
+                                            <input className='w-[110px] border border-red-600/65 outline-none p-1' type="number" onChange={(e) => setPayammount(e.target.value)} />
+                                            <button onClick={() => handlePay(customer)} className='bg-red-500 px-3 py-2 text-white ml-2 w-1/3'>Pay</button>
+                                        </td>
+                                        <td>
+                                            <Link to={`/dashboard/customer-info/${customer._id}`} className='bg-[#e94374f5] text-white font-semibold px-3 py-2 mt-2 rounded-md'>সব দেখুন </Link>
+                                        </td>
+                                        <td className="">
+                                            <button onClick={() => handleDelete(customer._id)} className='bg-red-600/85 text-white font-semibold px-2 py-[6px] rounded-md'>Delete</button>
+                                        </td>
+                                    </tr>
                                 )
                             })
                         }

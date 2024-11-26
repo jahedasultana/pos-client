@@ -6,8 +6,9 @@ const CustomerInfoDetails = () => {
     const [details,setDetails] = useState([]);
     const {id} = useParams()
     const productsMap = details?.products || [];
+    const customerPayments = details?.customerPayments || [];
 
-    console.log(details);
+    console.log(customerPayments);
 
     useEffect(()=>{
         const fetchData = async () => {
@@ -89,6 +90,42 @@ const CustomerInfoDetails = () => {
                     </tbody>
                 </table>
             </div>
+            
+
+            <section className="py-10">
+                <p className="py-2">Payment Information</p>
+                {/* payments given data */}
+            {
+                customerPayments.length == 0 ?
+                <p className="py-5 text-3xl text-red-400/50 text-center">Payment not yet</p>
+                 :
+                 <div>
+                <table className="min-w-full bg-white border border-gray-200">
+                    <thead>
+                        <tr className="bg-gray-100">
+                            <th className="py-2 px-4 border">Index</th>
+                            <th className="py-2 px-4 border">বাকি</th>
+                            <th className="py-2 px-4 border">জমা</th>
+                            <th className="py-2 px-4 border">পাব</th>
+                            <th className="py-2 px-4 border">Date</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {customerPayments.map((product, index) => (
+                            <tr key={index} className="text-center">
+                                <td className="py-2 px-4 border">{index +1}</td>
+                                <td className="py-2 px-4 border">{product.previousDue}</td>
+                                <td className="py-2 px-4 border">{product.payammount}</td>
+                                <td className="py-2 px-4 border">{parseInt(product?.previousDue) - parseInt(product?.payammount)}</td>
+                                <td className="py-2 px-4 border">{product.paidDate}</td>
+                            </tr>
+                        ))}
+                    </tbody>
+                </table>
+            </div>
+            }
+            </section>
+        
         </div>
        </section>
     );
