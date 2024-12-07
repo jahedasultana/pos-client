@@ -132,17 +132,17 @@ const ProductsBuyReport = (reface) => {
     <section className="p-10">
       <div className="flex justify-between pb-2">
         <h2>ক্রয় পন্যের রিপোর্ট</h2>
-        <p className="text-black">if existing company money add here</p>
+        <p className="text-black/70 text-lg font-bold">যদি উক্ত কোম্পানি থাকে, তাহলে শুধু টাকা যোগ কর</p>
       </div>
       <div className="overflow-x-auto">
         <table className="min-w-full border border-gray-300 divide-y divide-gray-200">
           <thead className="bg-gray-50">
             <tr className="bg-gray-400/45">
               <th className="px-4 py-2 text-center text-xs font-medium text-black/75 uppercase tracking-wider border border-gray-300">
-                Index
+                ক্রম
               </th>
               <th className="px-4 py-2 text-center text-xs font-medium text-black/75 uppercase tracking-wider border border-gray-300">
-                Company Name
+                কোম্পানির নাম
               </th>
               <th className="px-4 py-2 text-center text-xs font-medium text-black/75 uppercase tracking-wider border border-gray-300">
                 কোম্পানি পাবে
@@ -154,12 +154,13 @@ const ProductsBuyReport = (reface) => {
                 বাকি
               </th>
               <th className="px-4 py-2 text-center text-xs font-medium text-black/75 uppercase tracking-wider border border-gray-300">
-                Latet buy Date
+                সর্বশেষ কেনার তারিখ
               </th>
               <th className="px-4 py-2 text-center text-xs font-medium text-black/75 uppercase tracking-wider border border-gray-300">
-                Add Another
+                আরও যোগ করুন
               </th>
             </tr>
+
           </thead>
           <tbody className="bg-white divide-y divide-gray-200">
             {data.map((item, index) => (

@@ -25,6 +25,8 @@ import PurchaseReportDetails from "../Dashboard/Pages/PurchaseReportDetails/Purc
 import CustomerInfoDetails from "../Dashboard/Pages/CustomerInfo/CustomerInfoDetails";
 import PrivateRoute from "./PrivateRoute";
 import PublicPage from "./PrblicPage";
+import CashSale from "../Dashboard/Pages/CashSale/CashSale";
+import CashSaleReport from "../Dashboard/Pages/CashSale/CashSaleReport/CashSaleReport";
 
 
 export const router = createBrowserRouter([
@@ -124,6 +126,14 @@ export const router = createBrowserRouter([
             {
                 path: 'all-sales-report',
                 element: <PrivateRoute> <AllSalesReport/></PrivateRoute>
+            },
+            {
+                path: 'cash-sales',
+                element: <PrivateRoute> <CashSale/> </PrivateRoute>
+            },
+            {
+                path: 'cash-sales-report',
+                element: <PrivateRoute> <CashSaleReport/> </PrivateRoute>
             },
         ]
 

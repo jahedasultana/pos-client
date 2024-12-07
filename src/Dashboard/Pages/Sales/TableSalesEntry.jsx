@@ -11,12 +11,13 @@ const TableSalesEntry = () => {
             <table className="min-w-full border-collapse border border-gray-300 ">
                 <thead>
                     <tr className="bg-red-200">
-                        <th className="border border-gray-300 p-2">No. </th>
-                        <th className="border border-gray-300 p-2">Product</th>
-                        <th className="border border-gray-300 p-2">Quantity</th>
-                        <th className="border border-gray-300 p-2">Rate</th>
-                        <th className="border border-gray-300 p-2">Total</th>
+                        <th className="border border-gray-300 p-2">ক্রমিক</th>
+                        <th className="border border-gray-300 p-2">পণ্য</th>
+                        <th className="border border-gray-300 p-2">পরিমাণ</th>
+                        <th className="border border-gray-300 p-2">রেট</th>
+                        <th className="border border-gray-300 p-2">মোট</th>
                     </tr>
+
                 </thead>
                 <tbody>
 

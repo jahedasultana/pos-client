@@ -65,7 +65,7 @@ export default function AllSalesReport() {
                             <td className="py-2 px-4 text-center border border-gray-300">{sale?.customerData?.address}</td>
                             <td className="py-2 px-4 text-center border border-gray-300">{sale?.customerData?.mobile}</td>
                             <td className="py-2 px-4 text-center border border-gray-300">{sale?.due}</td>
-                            <td className="py-2 px-4 text-center border border-gray-300">{sale?.customerData.date ? sale?.customerData.date : 'No date' }</td>
+                            <td className="py-2 px-4 text-center border border-gray-300">{sale?.date ? sale?.date : 'No date' }</td>
                             <td className="py-2 px-4 text-center border border-gray-300">
                                 <button
                                     onClick={() => setSelectedSale(sale)}
@@ -93,6 +93,7 @@ export default function AllSalesReport() {
                         <p><strong className="text-sm">মোট টাকা :</strong> {selectedSale?.totalAmount}</p>
                         <p><strong className="text-sm">জমার পরিমাণ :</strong> {selectedSale?.cashPaid}</p>
                         <p><strong className="text-sm">বাকি :</strong> {selectedSale?.due}</p>
+                        <p><strong className="text-sm">Date :</strong> {selectedSale?.date ? selectedSale?.date : 'No date' }</p>
 
                         <h3 className="text-lg mt-4 ">প্রোডাক্টের তথ্য :</h3>
                         <ul>

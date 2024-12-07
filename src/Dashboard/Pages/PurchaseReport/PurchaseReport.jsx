@@ -9,8 +9,8 @@ const PurchaseReport = () => {
   useEffect(() => {
     // Fetch purchase report from the server
     const fetchData = async () => {
-        const res = await axios.get('https://pos-soft-server.vercel.app/purchase-report')
-        setData(res.data)
+      const res = await axios.get('https://pos-soft-server.vercel.app/purchase-report')
+      setData(res.data)
     }
     fetchData()
   }, []);
@@ -20,27 +20,28 @@ const PurchaseReport = () => {
       <h2>ক্রয় পন্যের রিপোর্ট</h2>
       <div className="overflow-x-auto">
         <table className="min-w-full border border-gray-300 divide-y divide-gray-200">
-          <thead className="bg-gray-50">
+          <thead className="bg-[#DD5079] text-white">
             <tr>
-              <th className="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider border border-gray-300">
-                Index
+              <th className="px-4 py-2 text-left text-sm font-medium uppercase tracking-wider border border-gray-300">
+                ক্রম
               </th>
-              <th className="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider border border-gray-300">
-                Company Name
+              <th className="px-4 py-2 text-left text-sm font-medium uppercase tracking-wider border border-gray-300">
+                কোম্পানির নাম
               </th>
-              <th className="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider border border-gray-300">
+              <th className="px-4 py-2 text-left text-sm font-medium uppercase tracking-wider border border-gray-300">
                 কোম্পানি পাবে
               </th>
-              <th className="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider border border-gray-300">
+              <th className="px-4 py-2 text-left text-sm font-medium uppercase tracking-wider border border-gray-300">
                 প্রদান করেছি
               </th>
-              <th className="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider border border-gray-300">
+              <th className="px-4 py-2 text-left text-sm font-medium uppercase tracking-wider border border-gray-300">
                 বাকি
               </th>
-              <th className="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider border border-gray-300">
-                Details
+              <th className="px-4 py-2 text-left text-sm font-medium uppercase tracking-wider border border-gray-300">
+                বিবরণ
               </th>
             </tr>
+
           </thead>
           <tbody className="bg-white divide-y divide-gray-200">
             {data.map((item, index) => (
@@ -61,7 +62,7 @@ const PurchaseReport = () => {
                   {parseInt(item.payableMoney) - parseInt(item.moneyGiven)}
                 </td>
                 <td className="px-4 py-2 whitespace-nowrap text-sm border border-gray-300">
-                 <Link className="bg-[#e94374f5] text-white font-semibold px-3 py-2 mt-2 rounded-md" to={`/dashboard/purchase-report/${item._id}`}>Details</Link>
+                  <Link className="bg-[#e94374f5] text-white font-semibold px-3 py-2 mt-2 rounded-md" to={`/dashboard/purchase-report/${item._id}`}>Details</Link>
                 </td>
               </tr>
             ))}
