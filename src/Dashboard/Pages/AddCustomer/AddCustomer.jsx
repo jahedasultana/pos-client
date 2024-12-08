@@ -124,7 +124,7 @@ export default function AddCustomer() {
     };
 
     return (
-        <div className="w-full h-auto bg-slate-100 py-8">
+        <div className="w-full  h-auto bg-slate-100 py-8">
             <h1 className="text-center text-lg md:text-3xl font-semibold mb-6 text-teal-700">
                 কাস্টমার তথ্য প্রদান করুন
             </h1>
