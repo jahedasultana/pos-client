@@ -65,7 +65,7 @@ const Login = () => {
                             <label htmlFor="password" className="text-white text-sm">Password</label>
                             <input
                                 id="password"
-                                type="password" // Changed to "password" for security
+                                type="password" 
                                 placeholder="Password....."
                                 name='password'
                                 className="rounded-md p-3 text-black focus:outline-none focus:ring-2 focus:ring-[#F4CE1F] transition"
